@@ -120,11 +120,11 @@ static RTIDType   _type = RTIDTypeUUID;
             case RTIDTypeUUID:
                 ID = [RTID uniqueString];
                 break;
-            case RTIDTypeAlphabetAndDigitLength32:
+            case RTIDTypeMD5:
                 ID = [RTID md5:[RTID uniqueString]];
                 break;
-            case RTIDTypeAlphabetAndDigitLength24:
-                ID = [[RTID md5:[RTID uniqueString]] substringToIndex:24];
+            case RTIDTypeUDID:
+                ID = [[RTID md5:[RTID uniqueString]] stringByAppendingString:[[[RTID uniqueString] substringToIndex:8] lowercaseString]];
                 break;
             default:
                 break;

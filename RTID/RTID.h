@@ -11,9 +11,9 @@
 
 
 typedef NS_ENUM(NSInteger, RTIDType) {
-    RTIDTypeUUID                        = 0,    // Default
-    RTIDTypeAlphabetAndDigitLength32    = 1,
-    RTIDTypeAlphabetAndDigitLength24    = 2,
+    RTIDTypeUUID  = 0,    // Default
+    RTIDTypeMD5   = 1,
+    RTIDTypeUDID  = 2,
 };
 
 #if !__has_feature(objc_arc)

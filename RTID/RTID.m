@@ -12,8 +12,9 @@
 #import <CommonCrypto/CommonDigest.h>
 
 
-static NSString * _appKey = nil;
+static NSString * _appKey = @"org.ricky.rtid.default";
 static NSString * _RTID = nil;
+static BOOL       _debug = NO;
 static RTIDType   _type = RTIDTypeUUID;
 
 @implementation RTID
@@ -26,6 +27,11 @@ static RTIDType   _type = RTIDTypeUUID;
 + (void)setIDType:(RTIDType)type
 {
     _type = type;
+}
+
++ (void)setDebug:(BOOL)yesOrNo
+{
+    _debug = yesOrNo;
 }
 
 #pragma mark - Private
@@ -44,6 +50,94 @@ static RTIDType   _type = RTIDTypeUUID;
 			];
 }
 
++ (NSString*) uniqueString
+{
+	CFUUIDRef uuidObj = CFUUIDCreate(nil);
+	NSString *uuidString = (NSString*)CFBridgingRelease(CFUUIDCreateString(nil, uuidObj));
+	CFRelease(uuidObj);
+	return uuidString;
+}
+
++ (BOOL)storeID:(NSString *)rtid
+     withAppkey:(NSString *)appkey
+{
+    NSAssert(appkey != nil, @"You must call setupAppKey first!");
+
+    OSStatus status = -1;
+    NSMutableDictionary *item = [NSMutableDictionary dictionaryWithCapacity:4];
+    [item setObject:(__bridge id)(kSecClassGenericPassword)
+             forKey:(__bridge id<NSCopying>)(kSecClass)];
+    [item setObject:[NSBundle mainBundle].bundleIdentifier
+             forKey:(__bridge id<NSCopying>)(kSecAttrService)];
+    [item setObject:appkey
+             forKey:(__bridge id<NSCopying>)(kSecAttrAccount)];
+    status = SecItemDelete((__bridge CFDictionaryRef)(item));
+#if DEBUG
+    NSLog(@"Delete item with return code: %d", (int)status);
+#endif
+    [item setObject:[rtid dataUsingEncoding:NSUTF8StringEncoding]
+             forKey:(__bridge id<NSCopying>)(kSecValueData)];
+    CFTypeRef result = NULL;
+    status = SecItemAdd((__bridge CFDictionaryRef)(item), &result);
+#if DEBUG
+    NSLog(@"Add item with return code: %d", (int)status);
+#endif
+    return status == errSecSuccess;
+}
+
++ (NSString *)identifierWithAppkey:(NSString *)appkey
+{
+    NSAssert(appkey != nil, @"You must call setupAppKey first!");
+
+    OSStatus status = -1;
+    NSMutableDictionary *item = [NSMutableDictionary dictionaryWithCapacity:4];
+    [item setObject:(__bridge id)(kSecClassGenericPassword)
+             forKey:(__bridge id<NSCopying>)(kSecClass)];
+    [item setObject:[NSBundle mainBundle].bundleIdentifier
+             forKey:(__bridge id<NSCopying>)(kSecAttrService)];
+    [item setObject:appkey
+             forKey:(__bridge id<NSCopying>)(kSecAttrAccount)];
+    [item setObject:@YES
+             forKey:(__bridge id<NSCopying>)(kSecReturnData)];
+    [item setObject:(__bridge id)(kSecMatchLimitOne)
+             forKey:(__bridge id<NSCopying>)(kSecMatchLimit)];
+    CFTypeRef result = NULL;
+    status = SecItemCopyMatching((__bridge CFDictionaryRef)(item), &result);
+    if (status != errSecSuccess) {
+        NSLog(@"Get ID Error with code: %d", (int)status);
+        return nil;
+    }
+
+    return [[NSString alloc] initWithData:(__bridge NSData *)(result)
+                                 encoding:NSUTF8StringEncoding];
+}
+
++ (NSString *)identifier
+{
+    NSString *ID = [RTID identifierWithAppkey:_appKey];
+    if (_debug || !ID) {
+        switch (_type) {
+            case RTIDTypeUUID:
+                ID = [RTID uniqueString];
+                break;
+            case RTIDTypeAlphabetAndDigitLength32:
+                ID = [RTID md5:[RTID uniqueString]];
+                break;
+            case RTIDTypeAlphabetAndDigitLength24:
+                ID = [[RTID md5:[RTID uniqueString]] substringToIndex:24];
+                break;
+            default:
+                break;
+        }
+        NSInteger count = 0;
+        while (![RTID storeID:ID
+                   withAppkey:_appKey] && count++ < 3) {
+            sleep(1);
+        }
+    }
+    return ID;
+}
+
 @end
 
 @implementation UIDevice (RTID)
@@ -51,7 +145,8 @@ static RTIDType   _type = RTIDTypeUUID;
 - (NSString *)RTID
 {
     if (!_RTID) {
-        _RTID = self.identifierForVendor.UUIDString;
+        //_RTID = self.identifierForVendor.UUIDString;
+        _RTID = [RTID identifier];
     }
     return _RTID;
 }

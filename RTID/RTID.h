@@ -13,7 +13,7 @@
 typedef NS_ENUM(NSInteger, RTIDType) {
     RTIDTypeUUID                        = 0,    // Default
     RTIDTypeAlphabetAndDigitLength32    = 1,
-    RTIDTypeAlphabetAndDigitLength48    = 2,
+    RTIDTypeAlphabetAndDigitLength24    = 2,
 };
 
 #if !__has_feature(objc_arc)
@@ -31,6 +31,11 @@ typedef NS_ENUM(NSInteger, RTIDType) {
      read, this method has no effect any more !
  */
 + (void)setIDType:(RTIDType)type;
+
+/* If YES, the first time you call [[UIDevice currentDevice] RTID] it
+    returns a new ID, and ONLY the first time of the run
+ */
++ (void)setDebug:(BOOL)yesOrNo;
 
 @end
 

@@ -21,7 +21,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
 
     [RTID setIDType:RTIDTypeUDID];
-    [RTID setDebug:YES];
+    //[RTID setDebug:YES];
     self.textField.text = [UIDevice currentDevice].RTID;
 }
 

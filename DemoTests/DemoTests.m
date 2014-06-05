@@ -1,25 +1,23 @@
 //
-//  RTIDTests.m
-//  RTIDTests
+//  DemoTests.m
+//  DemoTests
 //
 //  Created by ricky on 14-6-5.
 //  Copyright (c) 2014年 ricky. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
-#import "RTID.h"
 
-@interface RTIDTests : XCTestCase
+@interface DemoTests : XCTestCase
 
 @end
 
-@implementation RTIDTests
+@implementation DemoTests
 
 - (void)setUp
 {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    [RTID setupAppkey:@"abcd"];
 }
 
 - (void)tearDown
@@ -30,7 +28,7 @@
 
 - (void)testExample
 {
-    NSLog(@"%@", [UIDevice currentDevice].RTID);
+    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
 }
 
 @end

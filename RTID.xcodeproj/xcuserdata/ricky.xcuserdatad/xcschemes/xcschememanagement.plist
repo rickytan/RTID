@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Demo.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>RTID.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -18,6 +23,16 @@
 			<true/>
 		</dict>
 		<key>9C3DBF9A1940615A0058080F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9C3DBFB71940687F0058080F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9C3DBFD41940687F0058080F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

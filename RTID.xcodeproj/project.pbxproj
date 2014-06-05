@@ -30,9 +30,9 @@
 		9C3DBFE01940687F0058080F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9C3DBFDE1940687F0058080F /* InfoPlist.strings */; };
 		9C3DBFE21940687F0058080F /* DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C3DBFE11940687F0058080F /* DemoTests.m */; };
 		9C3DBFEA194069500058080F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C3DBFE9194069500058080F /* UIKit.framework */; };
-		9C3DBFEC194069550058080F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C3DBFEB194069550058080F /* Security.framework */; };
 		9C3DBFEF194069900058080F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C3DBFE9194069500058080F /* UIKit.framework */; };
 		9C3DBFF0194069940058080F /* libRTID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C3DBF8B1940615A0058080F /* libRTID.a */; };
+		9CAC04CD19408444009786E1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C3DBFEB194069550058080F /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,7 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9C3DBFEC194069550058080F /* Security.framework in Frameworks */,
+				9CAC04CD19408444009786E1 /* Security.framework in Frameworks */,
 				9C3DBFEA194069500058080F /* UIKit.framework in Frameworks */,
 				9C3DBF8F1940615A0058080F /* Foundation.framework in Frameworks */,
 			);

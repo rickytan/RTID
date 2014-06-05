@@ -22,7 +22,7 @@ typedef NS_ENUM(NSInteger, RTIDType) {
 
 @interface RTID : NSObject
 
-/* Use your own generated key here, DO NOT change it, or RTID will
+/* Use your own generated key here, **DO NOT** change it, or RTID will
      change !
  */
 + (void)setupAppkey:(NSString *)appkey;

@@ -16,10 +16,6 @@ typedef NS_ENUM(NSInteger, RTIDType) {
     RTIDTypeUDID  = 2,
 };
 
-#if !__has_feature(objc_arc)
-#error "This lib uses ARC!"
-#endif
-
 @interface RTID : NSObject
 
 /* Use your own generated key here, **DO NOT** change it, or RTID will

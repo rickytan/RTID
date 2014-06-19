@@ -12,6 +12,11 @@
 #import <CommonCrypto/CommonDigest.h>
 
 
+#if !__has_feature(objc_arc)
+#error "This lib uses ARC!"
+#endif
+
+
 static NSString * _appKey = @"org.ricky.rtid.default";
 static NSString * _RTID = nil;
 static BOOL       _debug = NO;
